@@ -43,7 +43,7 @@ I used the ```tapply ``` function to find the ```sum``` of all the steps per day
 
 ### Histogram of Total Steps Per Day
 
-``` {r fig.width = 5,fig.height = 4}
+``` {r histTotalSteps, fig.width = 5,fig.height = 4}
 #load the ggplot2 library (as I will be using qplot for the histogram)
 library(ggplot2)
 
@@ -66,7 +66,7 @@ Easily, R provides built-in functions ```mean``` and ```median``` to calculate t
 
 ### Times Series Plot for Intervals
 
-``` {r fig.width = 5, fig.height = 4}
+``` {r timePlotStepsInterval, fig.width = 5, fig.height = 4}
 #get all the intervals from dataset
 eachInterval <- unique(activity$interval)
 
@@ -154,7 +154,7 @@ Both return zero, validating the claim that there are no missing (```NA```) valu
 
 ### Updated Histogram of Total Steps Per Day
 
-``` {r}
+``` {r histTotalStepsNATrue}
 totalSteps <- tapply(newActivityDf$steps, newActivityDf$date, sum)
 
 #load the ggplot2 library (as I will be using qplot for the histogram)
@@ -202,7 +202,7 @@ print(head(newActivityDf))
 
 ### Time Series Plot Split by Weekend and Weekday
 
-``` {r}
+``` {r weekDayweekEndTimeSeriesInterval}
 week <- data.frame(sapply(split(newActivityDf, newActivityDf$weekLab), function(e) {tapply(e$steps, e$interval, mean, na.rm = TRUE)}))
 
 #complicated version and display is not very user friendly

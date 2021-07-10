@@ -56,7 +56,7 @@ qplot(totalSteps, col = "red") + ggtitle("Histogram of Total Steps per Day") + x
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-![plot of chunk unnamed-chunk-23](figure/unnamed-chunk-23-1.png)
+![plot of chunk histTotalSteps](figure/histTotalSteps-1.png)
   
 The question asked was somewhat confusing, as it would not be possible to graph both the days and the number of steps in accordance of the days on a histogram. Defined by [Forbes](https://www.forbes.com/sites/naomirobbins/2012/01/04/a-histogram-is-not-a-bar-chart/?sh=168974856d77), "histograms are used to show distributions of variables while bar charts are used to compare variables." Thus, plotting the days in correlation with the number of steps with that day would result in a bar plot. Therefore, I interpreted this question as "show the distribution of frequencies of steps per day". The bar graph lists the ranges of number of steps per day and their frequencies with the days given.
 
@@ -97,7 +97,7 @@ meanIntervalSteps <- tapply(activity$steps, activity$interval, mean)
 qplot(eachInterval, meanIntervalSteps) + geom_line(aes(col = "red")) + ggtitle("Time Plot of Mean Steps for Each Interval") + xlab("Activity Interval") + ylab("Mean Steps")
 ```
 
-![plot of chunk unnamed-chunk-25](figure/unnamed-chunk-25-1.png)
+![plot of chunk timePlotStepsInterval](figure/timePlotStepsInterval-1.png)
 
 The times series plot here plots the mean steps of each interval. The ```tapply``` function takes each interval and then calculates the mean by using the ```mean``` function. Here, I plotted the "mean" points of each interval and then connected them using the built-in ```ggplot2``` library function ```geom_line()```. Then, I customized the labels and the title for the graph to make it more readable for the reader.
 
@@ -221,7 +221,7 @@ qplot(totalSteps, col = "red") + ggtitle("Histogram of Total Steps per Day") + x
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-![plot of chunk unnamed-chunk-29](figure/unnamed-chunk-29-1.png)
+![plot of chunk histTotalStepsNATrue](figure/histTotalStepsNATrue-1.png)
 
 There are major differences between the modified (imputed) dataset and the original dataset. In this example, steps with dates that have a mean of ```NaN``` are automatically assigned 0. The estimates in the beginning differ from the ```mean``` and ```median``` that I calculated after imputing the missing values. Therefore, the histogram shows an increase in frequencies of 0. The impact of imputing missing values is that the distribution of frequencies is more "flat", rather than a normal distribution curve.
 
@@ -302,6 +302,6 @@ weekDf <- rbind(weekdayDf, weekendDf)
 qplot(data = weekDf, rownames(weekDf) ,`Mean Steps`) + facet_grid(.~weekLab) + geom_line(aes(group = 1))+ scale_x_discrete(guide = guide_axis(check.overlap = TRUE), labels = rep(unique(activity$interval),2)) + ggtitle("5-Minute Interval Spread Across Weekday and Weekend") + xlab("Interval") + ylab("Number of steps")
 ```
 
-![plot of chunk unnamed-chunk-32](figure/unnamed-chunk-32-1.png)
+![plot of chunk weekDayweekEndTimeSeriesInterval](figure/weekDayweekEndTimeSeriesInterval-1.png)
 
 As shown, the plot gives the weekday and weekend steps by interval. I first created two seperate dataframes by the factor variable ```weekLab```. Then I merged the two  after using ```tapply``` from the previous examples. I used a facet grid to show both the weekend and weekday of both intervals. The graph is not very user friendly, as the labels at the bottom are clumped. I used ```scale_x_discrete``` from [this article](https://datavizpyr.com/how-to-dodge-overlapping-text-on-x-axis-labels-in-ggplot2/). However, the labels are again clumped. This was the most feasible option as the labels were overlapping and were illegible. I labeled the graph appropriately with ```ggtitle```, ```xlab```, and ```ylab``` functions. The labels at first were messy and were incorrect, so I overrode the default by using the function ```rep``` and the argument ```unique(activity$interval)```, as it would give a list of all the intervals (no overlaps). I repeated this twice, first for the weekdays plot and then the weekends plot. 
